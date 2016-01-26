@@ -19,7 +19,7 @@
  */
 
 #ifndef _SCSI_IOCTLS_H
-#define _SCSI_IOCTLS_H 
+#define _SCSI_IOCTLS_H
 
 #include <stdint.h>
 
@@ -33,9 +33,16 @@ typedef struct scsi_idlun {
 	uint32_t host_unique_id;
 } Scsi_Idlun;
 
+inline int get_scsi_idlun(int fd, Scsi_Idlun *idlun)
+{
+	return ioctl(fd, SCSI_IOCTL_GET_IDLUN, idlun);
+}
 
-inline int get_scsi_idlun(int fd, Scsi_Idlun *idlun);
-inline int get_scsi_pci(int fd, char *slot_name);
+inline int get_scsi_pci(int fd, char *slot_name)
+{
+	return ioctl(fd, SCSI_IOCTL_GET_PCI, slot_name);
+}
+
 int idlun_to_components (Scsi_Idlun *idlun,
 			 unsigned char *host,
 			 unsigned char *channel,
